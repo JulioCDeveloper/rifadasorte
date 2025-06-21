@@ -13,13 +13,11 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
   title,
   image,
   price,
-  totalNumbers,
   availableNumbers,
   drawDate,
   status,
   winner,
   instantWinners,
-  isHighlighted = false
 }) => {
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
   const [showWinnersModal, setShowWinnersModal] = useState(false);
@@ -46,14 +44,14 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
 
   return (
     <>
-      <div 
+      <div
         className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100 cursor-pointer"
         onClick={handleCardClick}
       >
         {/* Image */}
         <div className="relative overflow-hidden h-32 sm:h-40">
-          <img 
-            src={image} 
+          <img
+            src={image}
             alt={title}
             className="w-full h-full object-cover"
           />
@@ -74,33 +72,32 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
         {/* Content - Column layout on mobile, row on larger screens */}
         <div className="p-4">
           <h3 className="font-semibold text-sm text-gray-800 mb-3 line-clamp-2">{title}</h3>
-          
           {/* Mobile: Column layout */}
           <div className="flex flex-col space-y-3 sm:hidden">
             <div className="text-center">
               <p className="text-lg font-bold text-emerald-600">R$ {price}</p>
               <p className="text-xs text-gray-500">por título</p>
             </div>
-            
+
             <div className="flex items-center justify-between text-xs text-gray-500">
-              <div className="flex items-center space-x-1">
+              {/* <div className="flex items-center space-x-1">
                 <Users className="w-3 h-3" />
                 <span>{availableNumbers}</span>
-              </div>
+              </div> */}
               <div className="flex items-center space-x-1">
                 <Calendar className="w-3 h-3" />
                 <span>{drawDate}</span>
               </div>
             </div>
 
-            <button 
+            <button
               className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2 rounded-lg transition-colors text-sm"
               onClick={(e) => {
                 e.stopPropagation();
                 handleCardClick();
               }}
             >
-              {status === 'active' ? 'Adquira já' : status === 'completed' ? 'Ver ganhadores' : 'Ver detalhes'}
+              {status === 'active' ? 'Adquira já' : status === 'completed' ? 'Ver ganhadores' : 'Aguardando'}
             </button>
           </div>
 
@@ -124,14 +121,14 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
               </div>
             </div>
 
-            <button 
+            <button
               className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2 rounded-lg transition-colors text-sm"
               onClick={(e) => {
                 e.stopPropagation();
                 handleCardClick();
               }}
             >
-              {status === 'active' ? 'Adquira já' : status === 'completed' ? 'Ver ganhadores' : 'Ver detalhes'}
+              {status === 'active' ? 'Adquira já' : status === 'completed' ? 'Ver ganhadores' : 'Aguardando'}
             </button>
           </div>
         </div>

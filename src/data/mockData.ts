@@ -1,6 +1,7 @@
 import { Raffle, Winner, InstantWinner } from '../types';
 import Banner1 from '../assets/banner1.png';
 import Banner2 from '../assets/banner2.png';
+import Banner3 from '../assets/banner3.png';
 
 export const featuredRaffle = {
   id: "featured",
@@ -81,8 +82,18 @@ export const raffles: Raffle[] = [
     price: "0,99",
     totalNumbers: 1000,
     availableNumbers: "30.000",
-    drawDate: "14/08",
-    status: "active"
+    drawDate: "14/09",
+    status: "pending"
+  },
+  {
+    id: "2",
+    title: "Sorteio Start 160 ou 15 Mil no Pix",
+    image: Banner3,
+    price: "0,99",
+    totalNumbers: 1000,
+    availableNumbers: "75.000",
+    drawDate: "22/10",
+    status: "pending"
   },
   // {
   //   id: "2", 

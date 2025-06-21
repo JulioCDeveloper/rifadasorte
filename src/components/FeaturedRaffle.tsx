@@ -69,10 +69,10 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
                   </div>
 
                   <div className="flex flex-col space-y-1 text-xs">
-                    <div className="flex items-center space-x-1">
+                    {/* <div className="flex items-center space-x-1">
                       <Users className="w-4 h-4" />
                       <span>{availableNumbers.toLocaleString()} disponíveis</span>
-                    </div>
+                    </div> */}
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
                       <span>Sorteio: {drawDate}</span>

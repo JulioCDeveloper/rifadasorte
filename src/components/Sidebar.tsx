@@ -23,7 +23,7 @@ const navigationItems = [
   { icon: MessageCircle, label: 'Comunicados', href: '#' },
   { icon: CreditCard, label: 'Meus títulos', href: '#' },
   // { icon: Gift, label: 'Minhas caixas', href: '#', badge: 'Novo' },
-  { icon: UserPlus, label: 'Cadastro', href: '#' },
+  // { icon: UserPlus, label: 'Cadastro', href: '#' },
   { icon: Users, label: 'Ganhadores', href: '#' },
 ];
 
