@@ -11,7 +11,7 @@ export const featuredRaffle = {
   price: "0,99",
   originalPrice: "1,99",
   totalNumbers: 25000,
-  availableNumbers: 50000,
+  availableNumbers: 75000,
   drawDate: "15/04.620533/2025-08",
   instantNumbers: 1.5
 };
