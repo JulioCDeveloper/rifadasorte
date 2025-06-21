@@ -6,6 +6,7 @@ interface FeaturedRaffleProps {
   id: string;
   title: string;
   subtitle: string;
+  subtitletitle2: string;
   image: string;
   price: string;
   originalPrice: string;
@@ -18,6 +19,7 @@ interface FeaturedRaffleProps {
 export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
   id,
   title,
+  subtitletitle2,
   subtitle,
   image,
   price,
@@ -54,6 +56,7 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
                 </div>
 
                 <h2 className="text-xl md:text-3xl font-bold mb-1">{title}</h2>
+                <h2 className="text-xl md:text-3xl font-bold mb-1">{subtitletitle2}</h2>
                 <p className="text-sm text-gray-200 mb-3">{subtitle}</p>
 
                 {/* Mobile: Column layout */}

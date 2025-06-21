@@ -4,8 +4,9 @@ import Banner2 from '../assets/banner2.png';
 
 export const featuredRaffle = {
   id: "featured",
-  title: "Start 160 ou 10 Mil no Pix",
-  subtitle: "Concorra a uma Start 160 ou 10 mil no PIX.",
+  title: "Duas premiações Start 160 ou 10 Mil no Pix.",
+  subtitletitle2: "Ou um Iphone 16 ou 5 Mil no Pix.",
+  subtitle: "Concorra a dois sorteios uma Start 160 ou 10 mil no PIX ou Iphone 16 ou 5 mil no Pix.",
   image: Banner1,
   price: "0,99",
   originalPrice: "1,99",
