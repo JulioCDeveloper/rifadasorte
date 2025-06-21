@@ -22,7 +22,6 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
   image,
   price,
   originalPrice,
-  totalNumbers,
   availableNumbers,
   drawDate,
   instantNumbers
@@ -35,13 +34,13 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
         <div className="relative">
           {/* Background Image */}
           <div className="h-64 md:h-80 relative overflow-hidden">
-            <img 
-              src={image} 
+            <img
+              src={image}
               alt={title}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            
+
             {/* Content Overlay - Column layout on mobile */}
             <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
               <div className="flex flex-col space-y-3 md:space-y-2">
@@ -53,10 +52,10 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
                     {instantNumbers}k INSTANTÂNEOS
                   </span>
                 </div>
-                
+
                 <h2 className="text-xl md:text-3xl font-bold mb-1">{title}</h2>
                 <p className="text-sm text-gray-200 mb-3">{subtitle}</p>
-                
+
                 {/* Mobile: Column layout */}
                 <div className="flex flex-col space-y-2 md:hidden">
                   <div className="flex items-baseline space-x-3">
@@ -65,7 +64,7 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
                     </span>
                     <span className="text-gray-300 line-through">R$ {originalPrice}</span>
                   </div>
-                  
+
                   <div className="flex flex-col space-y-1 text-xs">
                     <div className="flex items-center space-x-1">
                       <Users className="w-4 h-4" />
@@ -104,14 +103,14 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
 
           {/* Action Button */}
           <div className="p-4">
-            <button 
+            <button
               onClick={() => setShowPurchaseModal(true)}
               className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center space-x-2"
             >
               <Target className="w-5 h-5" />
               <span>Adquire já</span>
             </button>
-            
+
             <p className="text-center text-xs text-gray-500 mt-2">
               Vic: 15414.620533/2025-08
             </p>

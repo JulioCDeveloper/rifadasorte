@@ -53,7 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-8 border-b border-gray-800">
-            <div className="flex items-center space-x-3 p-6 mt-6 bg-red-400">
+            <div className="flex items-center space-x-3 p-6 mt-6">
               <img src={Logo} alt="Logo" className="w-full h-full" />
             </div>
           </div>

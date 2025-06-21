@@ -12,7 +12,7 @@ export const featuredRaffle = {
   totalNumbers: 25000,
   availableNumbers: 50000,
   drawDate: "15/04.620533/2025-08",
-  instantNumbers: 1
+  instantNumbers: 1.5
 };
 
 const winners: Winner[] = [

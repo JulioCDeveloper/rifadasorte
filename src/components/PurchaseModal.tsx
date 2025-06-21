@@ -117,7 +117,7 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, r
                   type="number"
                   value={quantity}
                   onChange={(e) => handleQuantityChange(parseInt(e.target.value) || 1)}
-                  min="1"
+                  min="5"
                   max={Math.min(20000, raffle.availableNumbers)}
                   className="w-20 text-center text-2xl font-bold bg-transparent border-none outline-none"
                 />
