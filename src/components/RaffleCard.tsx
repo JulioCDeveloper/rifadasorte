@@ -9,12 +9,12 @@ interface RaffleCardProps extends Raffle {
 }
 
 export const RaffleCard: React.FC<RaffleCardProps> = ({
-  id,
-  title,
+  _id,
+  nome,
   image,
-  price,
-  availableNumbers,
-  drawDate,
+  valor,
+  quantidade_numeros,
+  data_fim,
   status,
   winner,
   instantWinners,
@@ -23,21 +23,21 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
   const [showWinnersModal, setShowWinnersModal] = useState(false);
 
   const statusColors = {
-    active: 'bg-emerald-500 text-white',
-    completed: 'bg-blue-500 text-white',
-    pending: 'bg-yellow-500 text-white'
+    aguardando: 'bg-emerald-500 text-white',
+    completa: 'bg-blue-500 text-white',
+    finalizada: 'bg-yellow-500 text-white'
   };
 
   const statusLabels = {
-    active: 'Adquira já',
-    completed: 'Concluída',
-    pending: 'Aguardando'
+    aguardando: 'Adquira já',
+    completa: 'Concluída',
+    finalizada: 'Aguardando'
   };
 
   const handleCardClick = () => {
-    if (status === 'active') {
+    if (status === 'aguardando') {
       setShowPurchaseModal(true);
-    } else if (status === 'completed') {
+    } else if (status === 'completa') {
       setShowWinnersModal(true);
     }
   };
@@ -51,8 +51,8 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
         {/* Image */}
         <div className="relative overflow-hidden h-32 sm:h-40">
           <img
-            src={image}
-            alt={title}
+            src={`data:image/jpeg;base64,${image}`}
+            alt={nome}
             className="w-full h-full object-cover"
           />
           <div className="absolute top-2 left-2">
@@ -71,11 +71,11 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
 
         {/* Content - Column layout on mobile, row on larger screens */}
         <div className="p-4">
-          <h3 className="font-semibold text-sm text-gray-800 mb-3 line-clamp-2">{title}</h3>
+          <h3 className="font-semibold text-sm text-gray-800 mb-3 line-clamp-2">{nome}</h3>
           {/* Mobile: Column layout */}
           <div className="flex flex-col space-y-3 sm:hidden">
             <div className="text-center">
-              <p className="text-lg font-bold text-emerald-600">R$ {price}</p>
+              <p className="text-lg font-bold text-emerald-600">R$ {valor}</p>
               <p className="text-xs text-gray-500">por título</p>
             </div>
 
@@ -86,7 +86,7 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
               </div> */}
               <div className="flex items-center space-x-1">
                 <Calendar className="w-3 h-3" />
-                <span>{drawDate}</span>
+                <span>{data_fim}</span>
               </div>
             </div>
 
@@ -97,7 +97,7 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
                 handleCardClick();
               }}
             >
-              {status === 'active' ? 'Adquira já' : status === 'completed' ? 'Ver ganhadores' : 'Aguardando'}
+              {status === 'aguardando' ? 'Adquira já' : status === 'completa' ? 'Ver ganhadores' : 'Finalizada'}
             </button>
           </div>
 
@@ -105,7 +105,7 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
           <div className="hidden sm:block">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <p className="text-lg font-bold text-emerald-600">R$ {price}</p>
+                <p className="text-lg font-bold text-emerald-600">R$ {valor}</p>
                 <p className="text-xs text-gray-500">por título</p>
               </div>
             </div>
@@ -113,11 +113,11 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
             <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
               <div className="flex items-center space-x-1">
                 <Users className="w-3 h-3" />
-                <span>{availableNumbers}</span>
+                <span>{quantidade_numeros}</span>
               </div>
               <div className="flex items-center space-x-1">
                 <Calendar className="w-3 h-3" />
-                <span>{drawDate}</span>
+                <span>{data_fim}</span>
               </div>
             </div>
 
@@ -128,7 +128,7 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
                 handleCardClick();
               }}
             >
-              {status === 'active' ? 'Adquira já' : status === 'completed' ? 'Ver ganhadores' : 'Aguardando'}
+              {status === 'aguardando' ? 'Adquira já' : status === 'completa' ? 'Ver ganhadores' : 'Finalizada'}
             </button>
           </div>
         </div>
@@ -138,13 +138,13 @@ export const RaffleCard: React.FC<RaffleCardProps> = ({
       <PurchaseModal
         isOpen={showPurchaseModal}
         onClose={() => setShowPurchaseModal(false)}
-        raffle={{ id, title, image, price, availableNumbers }}
+        raffle={{ _id, nome, image, valor, quantidade_numeros }}
       />
 
       <WinnersModal
         isOpen={showWinnersModal}
         onClose={() => setShowWinnersModal(false)}
-        raffleTitle={title}
+        raffleTitle={nome}
         winner={winner}
         instantWinners={instantWinners}
       />

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { PaymentModal } from './PaymentModal';
+import { useRequest } from '../hooks/useRequest';
+import { AuthModal } from './AuthModal';
 
 interface CartModalProps {
   isOpen: boolean;
@@ -11,13 +13,40 @@ interface CartModalProps {
 export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCart();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const { error, loading, request } = useRequest();
 
   if (!isOpen) return null;
 
   const totalPrice = getTotalPrice();
 
-  const handleCheckout = () => {
-    setShowPaymentModal(true);
+  const ref_id = localStorage.getItem("ref_id")
+  const authTokenSorte = JSON.parse(localStorage.getItem("authTokenSorte"))
+
+  const handleCheckout = async () => {
+    console.log(authTokenSorte)
+    if (!authTokenSorte) {
+      setShowAuthModal(true);
+    }
+    const payload = {
+      ref_afflied: ref_id,
+      cliente_id: authTokenSorte?.cliente_id,
+      itens: cartItems.map(item => ({
+        rifa__id: item.raffleId,
+        quantidade_cotas: item.quantity,
+        valor_total: item.quantity * item.price
+      }))
+    };
+
+    try {
+      const response = await request('POST', '/api/auth/gerar-compra', payload);
+
+      if (response) {
+        setShowPaymentModal(true);
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handlePaymentClose = () => {
@@ -54,7 +83,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                     <div key={item.raffleId} className="bg-gray-50 rounded-lg p-4">
                       <div className="flex items-center space-x-3 mb-3">
                         <img
-                          src={item.image}
+                          src={`data:image/jpeg;base64,${item.image}`}
                           alt={item.raffleTitle}
                           className="w-12 h-12 rounded-lg object-cover"
                         />
@@ -69,7 +98,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
-                      
+
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                           <button
@@ -124,12 +153,15 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
-
+      {showAuthModal && (
+        <AuthModal onClose={() => setShowAuthModal(false)} />
+      )}
       {/* Payment Modal */}
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={handlePaymentClose}
         totalAmount={totalPrice}
+        pixCode={"00020126580014BR.GOV.BCB.PIX013636c4c14e-4b8a-4c4a-9c4a-1234567890ab5204000053039865802BR5925SORTE DA NORTE PREMIOS LTDA6009SAO PAULO62070503***6304A1B2"}
       />
     </>
   );

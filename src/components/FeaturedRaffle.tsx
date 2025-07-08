@@ -17,15 +17,14 @@ interface FeaturedRaffleProps {
 }
 
 export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
-  id,
-  title,
-  subtitletitle2,
-  subtitle,
+  _id,
+  nome,
+  descricao,
   image,
-  price,
-  originalPrice,
-  availableNumbers,
-  drawDate,
+  valor,
+  desconto,
+  quantidade_numeros,
+  data_fim,
   instantNumbers
 }) => {
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
@@ -37,8 +36,8 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
           {/* Background Image */}
           <div className="h-64 md:h-80 relative overflow-hidden">
             <img
-              src={image}
-              alt={title}
+              src={`data:image/jpeg;base64,${image}`}
+              alt={nome}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -50,22 +49,24 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
                   <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
                     POR APENAS
                   </span>
-                  <span className="bg-emerald-500 text-white px-2 py-1 rounded text-xs font-bold">
-                    {instantNumbers}k INSTANTÂNEOS
-                  </span>
+                  {instantNumbers && (
+                    <span className="bg-emerald-500 text-white px-2 py-1 rounded text-xs font-bold">
+                      {instantNumbers}k INSTANTÂNEOS
+                    </span>
+                  )}
                 </div>
 
-                <h2 className="text-xl md:text-3xl font-bold mb-1">{title}</h2>
-                <h2 className="text-xl md:text-3xl font-bold mb-1">{subtitletitle2}</h2>
-                <p className="text-sm text-gray-200 mb-3">{subtitle}</p>
+                <h2 className="text-xl md:text-3xl font-bold mb-1">{nome}</h2>
+                {/* <h2 className="text-xl md:text-3xl font-bold mb-1">{subtitletitle2}</h2> */}
+                <p className="text-sm text-gray-200 mb-3">{descricao}</p>
 
                 {/* Mobile: Column layout */}
                 <div className="flex flex-col space-y-2 md:hidden">
                   <div className="flex items-baseline space-x-3">
                     <span className="text-2xl font-bold text-emerald-400">
-                      R$ {price}
+                      R$ {valor}
                     </span>
-                    <span className="text-gray-300 line-through">R$ {originalPrice}</span>
+                    <span className="text-gray-300 line-through">R$ {desconto}</span>
                   </div>
 
                   <div className="flex flex-col space-y-1 text-xs">
@@ -75,7 +76,7 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
                     </div> */}
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
-                      <span>Sorteio: {drawDate}</span>
+                      <span>Sorteio: {data_fim}</span>
                     </div>
                   </div>
                 </div>
@@ -84,19 +85,19 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
                 <div className="hidden md:block">
                   <div className="flex items-baseline space-x-3 mb-3">
                     <span className="text-3xl md:text-4xl font-bold text-emerald-400">
-                      R$ {price}
+                      R$ {desconto}
                     </span>
-                    <span className="text-gray-300 line-through">R$ {originalPrice}</span>
+                    <span className="text-gray-300 line-through">R$ {valor}</span>
                   </div>
 
                   <div className="flex items-center space-x-4 text-xs">
                     <div className="flex items-center space-x-1">
                       <Users className="w-4 h-4" />
-                      <span>{availableNumbers.toLocaleString()} disponíveis</span>
+                      <span>{quantidade_numeros?.toLocaleString()} disponíveis</span>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
-                      <span>Sorteio: {drawDate}</span>
+                      <span>Sorteio: {data_fim}</span>
                     </div>
                   </div>
                 </div>
@@ -124,7 +125,7 @@ export const FeaturedRaffle: React.FC<FeaturedRaffleProps> = ({
       <PurchaseModal
         isOpen={showPurchaseModal}
         onClose={() => setShowPurchaseModal(false)}
-        raffle={{ id, title, image, price, availableNumbers }}
+        raffle={{ _id, nome, image, valor: desconto ? desconto : valor, quantidade_numeros }}
       />
     </>
   );

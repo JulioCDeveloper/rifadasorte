@@ -19,28 +19,32 @@ const quickSelectOptions = [250, 500, 750, 1000, 1500, 2000];
 export const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, raffle }) => {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
-
   if (!isOpen) return null;
 
-  const pricePerTicket = parseFloat(raffle.price.replace(',', '.'));
+  const pricePerTicket = parseFloat(String(raffle?.valor).replace(',', '.'));
   const totalPrice = quantity * pricePerTicket;
 
   const handleQuantityChange = (newQuantity: number) => {
-    if (newQuantity >= 1 && newQuantity <= 20000 && newQuantity <= raffle.availableNumbers) {
+    if (newQuantity >= 1 && newQuantity <= 20000 && newQuantity <= raffle?.quantidade_numeros) {
       setQuantity(newQuantity);
     }
   };
 
   const handleQuickSelect = (amount: number) => {
-    if (amount <= raffle.availableNumbers) {
-      setQuantity(amount);
+    const newQuantity = quantity + amount;
+    // Garante que o novo valor não ultrapasse os limites
+    if (newQuantity >= 1 && newQuantity <= 20000 && newQuantity <= raffle?.quantidade_numeros) {
+      setQuantity(newQuantity);
+    } else if (newQuantity > raffle?.quantidade_numeros) {
+      setQuantity(raffle?.quantidade_numeros); // Limita ao máximo permitido
     }
   };
 
+
   const handleAddToCart = () => {
     addToCart({
-      raffleId: raffle.id,
-      raffleTitle: raffle.title,
+      raffleId: raffle._id,
+      raffleTitle: raffle.nome,
       quantity,
       price: pricePerTicket,
       image: raffle.image
@@ -67,14 +71,14 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, r
           {/* Raffle Info */}
           <div className="flex items-center space-x-3 mb-6">
             <img
-              src={raffle.image}
-              alt={raffle.title}
+              src={`data:image/jpeg;base64,${raffle.image}`}
+              alt={raffle.nome}
               className="w-16 h-16 rounded-lg object-cover"
             />
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-800 text-sm">{raffle.title}</h3>
-              <p className="text-emerald-600 font-bold">R$ {raffle.price}</p>
-              <p className="text-xs text-gray-500">{raffle.availableNumbers} disponíveis</p>
+              <h3 className="font-semibold text-gray-800 text-sm">{raffle.nome}</h3>
+              <p className="text-emerald-600 font-bold">R$ {raffle.valor}</p>
+              <p className="text-xs text-gray-500">{raffle.quantidade_numeros} disponíveis</p>
             </div>
           </div>
 
@@ -88,11 +92,11 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, r
                 <button
                   key={amount}
                   onClick={() => handleQuickSelect(amount)}
-                  disabled={amount > raffle.availableNumbers}
+                  disabled={amount > raffle.quantidade_numeros}
                   className={`
                     p-3 rounded-lg border-2 transition-all text-center
                     ${amount === 750 ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-black text-white border-black hover:bg-gray-800'}
-                    ${amount > raffle.availableNumbers ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+                    ${amount > raffle.quantidade_numeros ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                   `}
                 >
                   <div className="font-bold">+{amount}</div>
@@ -111,18 +115,18 @@ export const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, r
               >
                 <Minus className="w-4 h-4" />
               </button>
-              
+
               <div className="flex-1 text-center">
                 <input
                   type="number"
                   value={quantity}
                   onChange={(e) => handleQuantityChange(parseInt(e.target.value) || 1)}
                   min="1"
-                  max={Math.min(20000, raffle.availableNumbers)}
+                  max={Math.min(20000, raffle.quantidade_numeros)}
                   className="w-20 text-center text-2xl font-bold bg-transparent border-none outline-none"
                 />
               </div>
-              
+
               <button
                 onClick={() => handleQuantityChange(quantity + 1)}
                 className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"

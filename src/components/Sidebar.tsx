@@ -1,40 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  Home,
-  Trophy,
-  MessageCircle,
-  CreditCard,
-  UserPlus,
-  Users,
-  FileText,
-  Shield,
+  Home, Trophy, CreditCard, Users, FileText, Shield,
 } from 'lucide-react';
-
-interface SidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
 import Logo from '../assets/logo.png';
+import { AuthModal } from './AuthModal';
+import { Link } from 'react-router-dom';
 
 const navigationItems = [
-  { icon: Home, label: 'Início', href: '#' },
+  { icon: Home, label: 'Início', href: '/' },
   { icon: Trophy, label: 'Campanhas', href: '#' },
-  { icon: MessageCircle, label: 'Comunicados', href: '#' },
   { icon: CreditCard, label: 'Meus títulos', href: '#' },
-  // { icon: Gift, label: 'Minhas caixas', href: '#', badge: 'Novo' },
-  // { icon: UserPlus, label: 'Cadastro', href: '#' },
-  { icon: Users, label: 'Ganhadores', href: '#' },
+  { icon: Users, label: 'Ganhadores', href: '/winners' },
 ];
 
 const legalItems = [
   { icon: FileText, label: 'Termos de uso', href: '#' },
   { icon: Shield, label: 'Política de privacidade', href: '#' },
-  // { icon: Cookie, label: 'Política de cookies', href: '#' },
-  // { icon: HelpCircle, label: 'Suporte', href: '#' },
 ];
 
-export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+export const Sidebar = ({ isOpen, onClose }) => {
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
   return (
     <>
       {/* Overlay */}
@@ -61,9 +47,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-1">
             {navigationItems.map((item, index) => (
-              <a
+              <Link
                 key={index}
-                href={item.href}
+                to={item.href}
                 className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors group"
               >
                 <item.icon className="w-5 h-5 text-gray-400 group-hover:text-emerald-400" />
@@ -73,7 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     {item?.badge}
                   </span>
                 )}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -93,12 +79,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
           {/* Login Button */}
           <div className="p-4 border-t border-gray-800">
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition-colors">
+            <button
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition-colors"
+              onClick={() => setShowAuthModal(true)}
+            >
               Entrar
             </button>
           </div>
         </div>
       </aside>
+
+      {/* Modal de autenticação */}
+      {showAuthModal && (
+        <AuthModal onClose={() => setShowAuthModal(false)} />
+      )}
     </>
   );
 };

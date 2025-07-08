@@ -6,19 +6,20 @@ interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   totalAmount: number;
+  pixCode: string;
 }
 
-export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, totalAmount }) => {
+export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, totalAmount, pixCode }) => {
   const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 minutos em segundos
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'confirmed'>('pending');
-  const [pixCode] = useState('00020126580014BR.GOV.BCB.PIX013636c4c14e-4b8a-4c4a-9c4a-1234567890ab5204000053039865802BR5925SORTE DA NORTE PREMIOS LTDA6009SAO PAULO62070503***6304A1B2');
+  // const [pixCode] = useState('00020126580014BR.GOV.BCB.PIX013636c4c14e-4b8a-4c4a-9c4a-1234567890ab5204000053039865802BR5925SORTE DA NORTE PREMIOS LTDA6009SAO PAULO62070503***6304A1B2');
   const [copied, setCopied] = useState(false);
   const { clearCart } = useCart();
 
   useEffect(() => {
     if (!isOpen) {
       setTimeLeft(15 * 60);
-      setPaymentStatus('pending');
+      setPaymentStatus('processing');
       setCopied(false);
       return;
     }
@@ -40,7 +41,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
   useEffect(() => {
     if (paymentStatus === 'processing') {
       const confirmTimer = setTimeout(() => {
-        setPaymentStatus('confirmed');
+        console.log('en')
+        // setPaymentStatus('confirmed');
       }, 3000);
       return () => clearTimeout(confirmTimer);
     }
@@ -62,9 +64,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
     }
   };
 
-  const handleSimulatePayment = () => {
-    setPaymentStatus('processing');
-  };
+  // const handleSimulatePayment = () => {
+  //   setPaymentStatus('processing');
+  // };
 
   const handleConfirmPayment = () => {
     clearCart();
@@ -144,7 +146,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
                 <p className="text-sm text-gray-600 mb-4">
                   Escaneie o QR Code com seu app de pagamento
                 </p>
-                
+
                 {/* PIX Code */}
                 <div className="bg-gray-50 rounded-lg p-3 mb-4">
                   <p className="text-xs text-gray-600 mb-2">Código PIX Copia e Cola:</p>
@@ -156,11 +158,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
                 {/* Copy Button */}
                 <button
                   onClick={handleCopyPixCode}
-                  className={`w-full flex items-center justify-center space-x-2 py-3 rounded-lg font-medium transition-colors ${
-                    copied 
-                      ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' 
-                      : 'bg-blue-500 hover:bg-blue-600 text-white'
-                  }`}
+                  className={`w-full flex items-center justify-center space-x-2 py-3 rounded-lg font-medium transition-colors ${copied
+                    ? 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                    : 'bg-blue-500 hover:bg-blue-600 text-white'
+                    }`}
                 >
                   <Copy className="w-4 h-4" />
                   <span>{copied ? 'Código Copiado!' : 'Copiar Código PIX'}</span>
@@ -192,7 +193,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
               </div>
 
               {/* Demo Button - Remove in production */}
-              <div className="border-t border-gray-200 pt-4">
+              {/* <div className="border-t border-gray-200 pt-4">
                 <button
                   onClick={handleSimulatePayment}
                   className="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 rounded-lg transition-colors text-sm"
@@ -203,7 +204,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
                 <p className="text-xs text-gray-500 text-center mt-1">
                   Botão apenas para demonstração
                 </p>
-              </div>
+              </div> */}
             </>
           )}
         </div>
